@@ -1,0 +1,30 @@
+﻿@model IEnumerable<SkillTreeMVCHomework.Models.Spending>
+@{
+    Layout = null;
+    var count = 1;
+}
+
+@if (Model != null)
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>@Html.DisplayNameFor(model => model.Category)</th>
+                <th>@Html.DisplayNameFor(model => model.Date)</th>
+                <th>@Html.DisplayNameFor(model => model.Money)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(count++)</td>
+                    <td>@item.Category</td>
+                    <td>@item.Date.ToShortDateString()</td>
+                    <td>@item.Money</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,66 @@
+﻿@model SkillTreeMVCHomework.Models.TallybookViewModel
+
+@{
+    ViewBag.Title = "記帳本";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal well">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.newSpending.Category, htmlAttributes: new { @class = "control-label col-sm-2" })
+            <div class="col-sm-10">
+                @*@Html.EditorFor(model => model.Category, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.DropDownListFor(model => model.newSpending.Category, Model.CategorySelectList,"請選擇", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.newSpending.Category, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.newSpending.Money, htmlAttributes: new { @class = "control-label col-sm-2" })
+            <div class="col-sm-10">
+                @Html.EditorFor(model => model.newSpending.Money, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.newSpending.Money, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.newSpending.Date, htmlAttributes: new { @class = "control-label col-sm-2" })
+            <div class="col-sm-10">
+                @Html.EditorFor(model => model.newSpending.Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.newSpending.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.newSpending.Description, htmlAttributes: new { @class = "control-label col-sm-2" })
+            <div class="col-sm-10">
+                @Html.TextAreaFor(model => model.newSpending.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.newSpending.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-8 col-sm-4">
+                <button type="submit" class="btn btn-danger"><i class="fa fa-send"></i> 送出</button>
+            </div>
+        </div>
+    </div>
+}
+
+@Html.Partial("_SpendingList",Model.spendingList)
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function ()
+        {
+            $("#newSpending_Date").datepicker({ dateFormat: 'yy/mm/dd' });
+        });
+    </script>
+}
