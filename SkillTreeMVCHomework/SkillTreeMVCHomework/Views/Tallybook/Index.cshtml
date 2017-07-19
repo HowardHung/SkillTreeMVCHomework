@@ -16,7 +16,7 @@
             @Html.LabelFor(model => model.newSpending.Category, htmlAttributes: new { @class = "control-label col-sm-2" })
             <div class="col-sm-10">
                 @*@Html.EditorFor(model => model.Category, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.DropDownListFor(model => model.newSpending.Category, Model.CategorySelectList,"請選擇", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.newSpending.Category, (IEnumerable<SelectListItem>)ViewData["CategorySelectList"], "請選擇", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.newSpending.Category, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -53,7 +53,7 @@
     </div>
 }
 
-@Html.Partial("_SpendingList",Model.spendingList)
+@Html.Action("SpendingList")
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

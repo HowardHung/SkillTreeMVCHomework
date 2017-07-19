@@ -9,32 +9,47 @@ namespace SkillTreeMVCHomework.Controllers
 {
     public class TallybookController : Controller
     {
-        // GET: Tallybook
+        private void PageOption()
+        {
+            ViewData["CategorySelectList"] = new List<SelectListItem>
+                {
+                    new SelectListItem() {Text="支出",Value="支出" } ,
+                    new SelectListItem() {Text="收入",Value="收入" }
+                };
+        }
+        // GET: Tally
         public ActionResult Index()
         {
-            Random rNumber = new Random();
-            var model = new TallybookViewModel();
-            model.spendingList = new List<Spending>();
-            for (int i = 0; i < 10; i++)
-            {
-                model.spendingList.Add(new Spending
-                {
-                    Category = rNumber.Next(0, 2) == 0 ? "收入" : "支出",
-                    Date = DateTime.Now.Date.AddDays(rNumber.Next(-7, -1)),
-                    Money = rNumber.Next(50, 300)*100
-                });
-            }
-            model.spendingList = model.spendingList.OrderBy(x => x.Date).ToList();
-            
-            return View(model);
+            PageOption();
+            return View();
         }
 
         [HttpPost]
-        public ActionResult Index(TallybookViewModel pageData)
+        public ActionResult Index(Spending pageData)
         {
-            //新增資料
+            //doSomething
+            //xxxServices(pageData)
+            PageOption();
+            return View();
+        }
 
-            return RedirectToAction("Index");
+        [ChildActionOnly]
+        public ActionResult SpendingList()
+        {
+            Random rNumber = new Random();
+            var result = new List<Spending>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                result.Add(new Spending
+                {
+                    Category = rNumber.Next(0, 2) == 0 ? "收入" : "支出",
+                    Date = DateTime.Now.Date.AddDays(rNumber.Next(-7, -1)),
+                    Money = rNumber.Next(5, 30)*100
+                });
+            }
+            result = result.OrderBy(x => x.Date).ToList();
+            return View(result);
         }
     }
 }
