@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace SkillTreeMVCHomework.Models
+namespace SkillTreeMVCHomework.Models.ViewModel
 {
     public class Spending
     {

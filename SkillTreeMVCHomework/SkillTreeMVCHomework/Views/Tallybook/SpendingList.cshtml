@@ -1,4 +1,7 @@
-﻿@model IEnumerable<SkillTreeMVCHomework.Models.Spending>
+﻿@using PagedList;
+@using PagedList.Mvc
+@model IPagedList<SkillTreeMVCHomework.Models.ViewModel.Spending>
+
 @{
     Layout = null;
     var count = 1;
@@ -10,9 +13,15 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>@Html.DisplayNameFor(model => model.Category)</th>
-                <th>@Html.DisplayNameFor(model => model.Date)</th>
-                <th>@Html.DisplayNameFor(model => model.Money)</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Category)
+                </th>
+                <th>
+    @Html.DisplayNameFor(model => model.FirstOrDefault().Date)
+                </th>
+                <th>
+    @Html.DisplayNameFor(model => model.FirstOrDefault().Money)
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -20,11 +29,28 @@
             {
                 <tr>
                     <td>@(count++)</td>
-                    <td>@item.Category</td>
-                    <td>@item.Date.ToShortDateString()</td>
+                    <td>@CategoryMapping(item.Category)</td>
+                    <td>@item.Date.ToString("yyyy-MM-dd")</td>
                     <td>@item.Money</td>
                 </tr>
             }
         </tbody>
     </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+                PagedListRenderOptions.ClassicPlusFirstAndLast)
+}
+
+@helper CategoryMapping(string categoryValue)
+{
+switch (categoryValue)
+{
+    case "0":
+        @("支出");
+        break;
+    case "1":
+        @("收入");
+        break;
+
+
+}
 }
