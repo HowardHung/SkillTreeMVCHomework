@@ -5,7 +5,7 @@
 
 @{
     Layout = null;
-    var count = 1;
+    var count = ((ViewData["currentPage"] != null ? (int)ViewData["currentPage"] - 1 : 0)*10)+1;
 }
 
 @if (Model != null)

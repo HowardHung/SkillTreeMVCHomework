@@ -13,6 +13,8 @@ namespace SkillTreeMVCHomework
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryUI").Include(
                         "~/Scripts/jquery-ui.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jqueryAjax").Include(
+                        "~/Scripts/jquery.unobtrusive-ajax.*"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));

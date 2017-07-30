@@ -10,7 +10,7 @@ namespace SkillTreeMVCHomework.Filter
     {
         public override bool IsValid(object value)
         {
-            if (value == null && value is DateTime)
+            if (value != null && value is DateTime)
             {
                 return (DateTime)value <= DateTime.Now.Date;
             }

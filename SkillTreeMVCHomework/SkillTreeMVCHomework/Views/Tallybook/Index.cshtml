@@ -5,10 +5,14 @@
 }
 
 
-@using (Html.BeginForm())
+@using (Ajax.BeginForm(new AjaxOptions
+{
+    UpdateTargetId = "spendingListDiv",
+    Url = Url.Action("AjaxUpdate", "TallyBook")
+}))
 {
     @Html.AntiForgeryToken()
-
+    @Html.Hidden("page", ViewData["currentPage"])
     <div class="form-horizontal well">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -53,10 +57,12 @@
     </div>
 }
 
-@Html.Action("SpendingList")
+<div id="spendingListDiv">
+    @Html.Action("SpendingList")
+</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+
+@section Scripts {   
     <script>
         $(function ()
         {

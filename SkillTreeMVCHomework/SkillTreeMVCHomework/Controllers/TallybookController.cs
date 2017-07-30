@@ -28,26 +28,52 @@ namespace SkillTreeMVCHomework.Controllers
                     new SelectListItem() {Text="收入",Value=((int)CatrgoryEnum.收入).ToString() }
                 };
         }
+
+        private int padeData(int page = 1)
+        {
+            var currentPage = page < 1 ? 1 : page;
+            ViewData["currentPage"] = currentPage;
+            return currentPage;
+        }
         // GET: Tally
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
             PageOption();
+            padeData(page);
             return View();
         }
 
+        //[HttpPost]
+        //public ActionResult Index(Spending pageData)
+        //{
+        //    //doSomething
+        //    //xxxServices(pageData)
+        //    if (ModelState.IsValid)
+        //    {
+        //        accountBookService.Create(pageData);
+        //        accountBookService.Commit();
+        //    }
+        //    PageOption();
+        //    return View();
+        //}
+
         [HttpPost]
-        public ActionResult Index(Spending pageData)
+        public ActionResult AjaxUpdate(Spending pageData, int page = 1)
         {
             //doSomething
             //xxxServices(pageData)
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && Request.IsAjaxRequest())
             {
                 accountBookService.Create(pageData);
                 accountBookService.Commit();
+                var result = accountBookService.GetAll().ToPagedList(padeData(page), 10);
+                return View("SpendingList", result);
             }
-            PageOption();
-            return View();
+            else
+                return Content("您輸入的格式是錯誤，或非Ajax連線");
+            
         }
+
 
         [ChildActionOnly]
         public ActionResult SpendingList(int page = 1)
@@ -64,9 +90,8 @@ namespace SkillTreeMVCHomework.Controllers
             //    });
             //}
             //result = result.OrderBy(x => x.Date).ToList();
-            var currentPage = page < 1 ? 1 : page;
-            var result = accountBookService.GetAll().ToPagedList(currentPage, 10);
-            return View(result);
+            var result = accountBookService.GetAll().ToPagedList(padeData(page), 10);
+            return PartialView(result);
         }
     }
 }
