@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SkillTreeMVCHomework.Enum;
 
 namespace SkillTreeMVCHomework.Controllers
 {
@@ -23,8 +24,8 @@ namespace SkillTreeMVCHomework.Controllers
         {
             ViewData["CategorySelectList"] = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text="支出",Value="0" } ,
-                    new SelectListItem() {Text="收入",Value="1" }
+                    new SelectListItem() {Text="支出",Value=((int)CatrgoryEnum.支出).ToString() } ,
+                    new SelectListItem() {Text="收入",Value=((int)CatrgoryEnum.收入).ToString() }
                 };
         }
         // GET: Tally

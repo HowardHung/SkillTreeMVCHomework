@@ -1,5 +1,6 @@
 ﻿@using PagedList;
 @using PagedList.Mvc
+@using SkillTreeMVCHomework.Enum
 @model IPagedList<SkillTreeMVCHomework.Models.ViewModel.Spending>
 
 @{
@@ -17,10 +18,10 @@
                     @Html.DisplayNameFor(model => model.FirstOrDefault().Category)
                 </th>
                 <th>
-    @Html.DisplayNameFor(model => model.FirstOrDefault().Date)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Date)
                 </th>
                 <th>
-    @Html.DisplayNameFor(model => model.FirstOrDefault().Money)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Money)
                 </th>
             </tr>
         </thead>
@@ -42,15 +43,13 @@
 
 @helper CategoryMapping(string categoryValue)
 {
-switch (categoryValue)
+if (categoryValue == ((int)CatrgoryEnum.支出).ToString())
 {
-    case "0":
-        @("支出");
-        break;
-    case "1":
-        @("收入");
-        break;
-
-
+        <span style="color:red">支出</span>
 }
+else if (categoryValue == ((int)CatrgoryEnum.收入).ToString())
+{
+        <span style="color:blue">收入</span>
+}
+
 }
